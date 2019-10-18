@@ -1,13 +1,21 @@
-let money = 10000,
-    income = 500,
-    addExpenses = 120,
-    deposit = 2000,
-    mission = 'become frontend developer',
-    period = '6 month';
+let money = 60000,
+    income = 'Ремонт пк',
+    addExpenses = '1200, 2500, 1000, 500',
+    deposit = true,
+    mission = 100000,
+    period = 12;
 
-//alert(mission);
-//console.log('addExpenses : ', addExpenses);
+console.log(typeof money);//тип данных
+console.log(typeof income);
+console.log(typeof deposit);
 
-alert('Всем привет!');
+console.log(income.length);//длина строки
 
-console.log('no errors');
+console.log('За период' + ' ' + period + ' ' + 'месяцев' + ' ' + 'цель заработать' + ' ' + mission + ' ' + 'рублей');
+
+console.log(addExpenses.toLowerCase().split(', '));//нижний регистр, выводим строку в массив
+
+let budgetDay = money / 30;
+
+console.log(budgetDay);//результат
+console.log(money % 30);//остаток
