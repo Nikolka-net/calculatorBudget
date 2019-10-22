@@ -1,7 +1,7 @@
 'use strict';
 
 let income = 500,
-    mission = 'become frontend developer',
+    mission = 100000,
     period = '6 month',
     money;
 
@@ -53,10 +53,26 @@ function moneyDepositExpenses() {
 
 moneyDepositExpenses();
 
-let addExpenses1 = prompt('Какие обязательные ежемесячные расходы у вас есть?');
-let addExpenses2 = prompt('Какие обязательные ежемесячные расходы у вас есть?');
-let spending1 = prompt('Во сколько это обойдётся?');
-let spending2 = prompt('Во сколько это обойдётся?');
+let addExpenses1 = Number(prompt('Какие обязательные ежемесячные расходы у вас есть?'));//расходы
+let addExpenses2 = Number(prompt('Какие обязательные ежемесячные расходы у вас есть?'));
+let spending1 = Number(prompt('Во сколько это обойдётся?'));
+let spending2 = Number(prompt('Во сколько это обойдётся?'));
 
-let proceeds = money - (addExpenses1 + addExpenses2 + spending1 + spending2);
-console.log(proceeds);
+let budgetMonth = money - (addExpenses1 + addExpenses2 + spending1 + spending2);
+console.log(budgetMonth);//доход за месяц
+
+let destination = mission / budgetMonth;
+console.log(Math.ceil(destination));//цель достигнута за n месяцев
+
+let budgetDay = budgetMonth / 30;
+console.log(Math.floor(budgetDay));//доход за день
+
+if (budgetDay >= 800) {
+    alert('Высокий уровень дохода');
+} else if (budgetDay >= 300 && budgetDay < 800) {
+    alert('Средний уровень дохода');
+} else if (budgetDay >= 0 && budgetDay < 300) {
+    alert('Низкий уровень дохода');
+} else {
+    alert('Что-то пошло не так');
+}
