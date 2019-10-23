@@ -1,9 +1,9 @@
-let money = 60000,
+let money = 30000,
     income = 'Ремонт пк',
-    addExpenses = '1200, 2500, 1000, 500',
+    addExpenses = 'квартплата, интернет, телефон',
     deposit = true,
     mission = 100000,
-    period = 12;
+    period = 6;
 
 console.log(typeof money);//тип данных
 console.log(typeof income);
