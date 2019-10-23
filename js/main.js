@@ -1,71 +1,49 @@
 'use strict';
 
-let income = 500,
-    mission = 100000,
-    period = '6 month',
+let mission = 100000,
+    period = 5,
     money;
 
-function moneyDepositExpenses() {
-
-
-    function moneyPrompt() {
-
-        let n = prompt('Ваш месячный доход?', '25000');
-
-        if (!isNaN(parseFloat(n)) && isFinite(n) == true) {
-            money = Number(n);
-        } else {
-            alert('Введите число');
-            moneyPrompt();
-        }
-    }
-
-    moneyPrompt();
-
-    function addExpensesPrompt() {
-
-        let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
-        addExpenses = addExpenses.split(', ');
-        console.log(addExpenses);//выводим в виде массива
-    }
-
-    addExpensesPrompt();
-
-
-
-    let deposit = prompt('Есть ли у вас депозит в банке?', 'Да');
-
-    if (deposit == 'Да') {
-        deposit = Boolean(1);
-    } else if (deposit == 'Нет') {
-        deposit = Boolean(0);
+function getMoney() {
+    let n = prompt('Ваш месячный доход?', 30000);
+    if (!isNaN(parseFloat(n)) && isFinite(n) == true) {
+        money = Number(n);
     } else {
-        alert('Введите корректное значение');
+        alert('Введите число!');
+        getMoney();
     }
-
-
-
-    console.log(typeof deposit);
-    console.log(typeof money);
-    console.log(typeof income);
-
 }
+getMoney();
 
-moneyDepositExpenses();
+let income = 'Ремонт пк';
+let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'квартплата, интернет');
+addExpenses = addExpenses.split(', ');
+console.log(addExpenses);
+let deposit = !!confirm('Есть ли у вас депозит в банке?');
 
-let addExpenses1 = Number(prompt('Какие обязательные ежемесячные расходы у вас есть?'));//расходы
-let addExpenses2 = Number(prompt('Какие обязательные ежемесячные расходы у вас есть?'));
-let spending1 = Number(prompt('Во сколько это обойдётся?'));
-let spending2 = Number(prompt('Во сколько это обойдётся?'));
+console.log(typeof money);
+console.log(typeof income);
+console.log(typeof deposit);
 
-let budgetMonth = money - (addExpenses1 + addExpenses2 + spending1 + spending2);
-console.log(budgetMonth);//доход за месяц
+let addExpenses1 = prompt('Какие ежемесячные расходы у вас есть?', 'телефон');
+let spending1 = +prompt('Во сколько это обойдётся?', '1000');
+
+let addExpenses2 = prompt('Какие ежемесячные расходы у вас есть?', 'питание');
+let spending2 = +prompt('Во сколько это обойдётся?', '2500');
+
+console.log('Период ' + period + ' месяца');
+console.log(`Цель заработать ${mission} рублей`);
+
+let budgetMonth = money - (spending1 + spending2);
+console.log('Доход за месяц: ' + budgetMonth);
 
 let destination = mission / budgetMonth;
-console.log(Math.ceil(destination));//цель достигнута за n месяцев
+destination = Math.ceil(destination);
+console.log('Цель будет достигнута за ' + destination + ' месяцев');//цель достигнута за n месяцев
 
 let budgetDay = budgetMonth / 30;
-console.log(Math.floor(budgetDay));//доход за день
+budgetDay = Math.floor(budgetDay);
+console.log('Доход за день с учётом расходов: ' + budgetDay + ' рублей');//доход за день
 
 if (budgetDay >= 800) {
     alert('Высокий уровень дохода');
