@@ -16,14 +16,12 @@ let mission = 100000,
 }
 getMoney(); */
 
-let start = function () {
-  do {
-    money = prompt('Ваш месячный доход?', 30000);
-    console.log('money: ', money);
-  }
-  while (isNaN(money) || money === '' || money === null);
-};
-start();
+//money
+do {
+  money = prompt('Ваш месячный доход?', 30000);
+  console.log('money: ', money);
+}
+while (isNaN(money) || money === '' || money === null);
 
 
 let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'квартплата, интернет');
@@ -46,7 +44,6 @@ let addExpenses1,
 let getExpensesMonth = function () {
   let sum = 0;
 
-
   for (let i = 0; i < 2; i++) {
     if (i === 0) {
       addExpenses1 = prompt('Какие ежемесячные расходы у вас есть?', 'телефон');
@@ -54,15 +51,8 @@ let getExpensesMonth = function () {
     if (i === 1) {
       addExpenses2 = prompt('Какие ежемесячные расходы у вас есть?', 'питание');
     }
-
-    do {
-
-      sum += +prompt('Во сколько это обойдётся?', '2500');
-      console.log('sum: ', sum);
-    }
-    while (isNaN(sum) || sum === '' || sum === null);
-
-
+    sum += +prompt('Во сколько это обойдётся?', '2500');
+    console.log(sum);
   }
 
   return sum;
