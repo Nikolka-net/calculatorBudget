@@ -6,13 +6,14 @@ let mission = 100000,
   money;
 
 /* function getMoney() {
-    let n = prompt('Ваш месячный доход?', 30000);
-    if (!isNaN(parseFloat(n)) && isFinite(n) == true) {
-        money = Number(n);
-    } else {
-        alert('Введите число!');
-        getMoney();
-    }
+  let n = prompt('Ваш месячный доход?', 30000);
+  if (!isNaN(parseFloat(n)) && isFinite(n) == true) {
+    money = Number(n);
+    console.log(money);
+  } else {
+    alert('Введите число!');
+    getMoney();
+  }
 }
 getMoney(); */
 
@@ -51,8 +52,9 @@ let getExpensesMonth = function () {
     if (i === 1) {
       addExpenses2 = prompt('Какие ежемесячные расходы у вас есть?', 'питание');
     }
+
     sum += +prompt('Во сколько это обойдётся?', '2500');
-    console.log(sum);
+
   }
 
   return sum;
