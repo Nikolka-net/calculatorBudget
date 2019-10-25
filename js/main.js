@@ -43,20 +43,30 @@ let addExpenses1,
   addExpenses2;
 
 let getExpensesMonth = function () {
-  let sum = 0;
+  let spending1,
+    spending2,
+    sum;
 
   for (let i = 0; i < 2; i++) {
     if (i === 0) {
       addExpenses1 = prompt('Какие ежемесячные расходы у вас есть?', 'телефон');
+      spending1 = prompt('Во сколько это обойдётся?', '2500');
+      while (isNaN(spending1) || spending1 === '' || spending1 === null) {
+        console.log('Введите число');
+        spending1 = prompt('Во сколько это обойдётся?', '2500');
+      }
     }
+
     if (i === 1) {
       addExpenses2 = prompt('Какие ежемесячные расходы у вас есть?', 'питание');
+      spending2 = prompt('Во сколько это обойдётся?', '3000');
+      while (isNaN(spending2) || spending2 === '' || spending2 === null) {
+        console.log('Введите число');
+        spending2 = prompt('Во сколько это обойдётся?', '3000');
+      }
     }
-
-    sum += +prompt('Во сколько это обойдётся?', '2500');
-
+    sum = Number(spending1) + Number(spending2);
   }
-
   return sum;
 };
 let spendingAmount = getExpensesMonth();
