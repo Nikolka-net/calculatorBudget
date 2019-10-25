@@ -1,13 +1,28 @@
-let money = 10000,
-    income = 500,
-    addExpenses = 120,
-    deposit = 2000,
-    mission = 'become frontend developer',
-    period = '6 month';
+'use strict';
 
-//alert(mission);
-//console.log('addExpenses : ', addExpenses);
+let getSimile = function () {
+  let number1;
+  let number2;
 
-alert('Всем привет!');
+  number1 = prompt('Введите первое число', '88');
+  while (isNaN(number1) || number1 === '' || number1 === null) {
+    number1 = prompt('Введите первое число', '88');
+  }
 
-console.log('no errors');
+  number2 = prompt('Введите второе число', '97');
+  while (isNaN(number2) || number2 === '' || number2 === null) {
+    number2 = prompt('Введите второе число', '97');
+  }
+
+  if (number1 > number2) {
+    console.log('Первое число больше второго');
+  } else if (number1 < number2) {
+    console.log('Второе число больше первого');
+  } else {
+    console.log('Числа равны');
+  }
+
+};
+
+getSimile();
+
