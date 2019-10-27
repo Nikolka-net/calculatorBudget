@@ -1,6 +1,7 @@
 'use strict';
+
 let money;
-//money
+
 let start = function () {
     do {
         money = prompt('Ваш месячный доход?', 30000);
@@ -20,23 +21,17 @@ let appData = {
     mission: 30000,
     period: 3,
     asking: function () {
-
+        let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'квартплата, интернет');
+        appData.addExpenses = addExpenses.toLowerCase.split(',');
+        appData.deposit = !!confirm('Есть ли у вас депозит в банке?');
     }
 };
 
 let mission = 100000,
-    period = 5,
-    income = 'Ремонт пк';
+    period = 5;
+//income = 'Ремонт пк';
 
 
-
-
-
-let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'квартплата, интернет');
-addExpenses = addExpenses.split(', ');
-console.log(addExpenses);
-
-let deposit = !!confirm('Есть ли у вас депозит в банке?');
 
 console.log('Период ' + period + ' месяца');
 console.log(`Цель заработать ${mission} рублей`);
@@ -126,8 +121,8 @@ let showTypeOf = function (data) {
     console.log(data, typeof (data));
 };
 showTypeOf(money);
-showTypeOf(income);
-showTypeOf(deposit);
+showTypeOf(appData.income);
+showTypeOf(appData.deposit);
 
 let getStatusIncome = function () {
     if (budgetDay >= 800) {
