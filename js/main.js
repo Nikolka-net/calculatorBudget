@@ -12,7 +12,9 @@ let buttonExpensesPlus = document.getElementsByTagName('button')[1];
 let depositCheck = document.querySelector('#deposit-check');
 
 //возможные доходы
-let additionalIncomeItem = document.querySelectorAll('.additional_income-item');
+let additionalIncomeItems = document.querySelectorAll('.additional_income-item');
+let additionalIncomeItem1 = additionalIncomeItems[0];
+let additionalIncomeItem2 = additionalIncomeItems[1];
 
 //блоки result
 let resultValue = document.querySelectorAll('.result-total');
@@ -34,6 +36,7 @@ let incomeItems = document.querySelectorAll('.income-items');
 
 let expenses = document.querySelectorAll('.expenses-title');
 let expensesTitle = expenses[1];
+let expensesAmount = document.querySelector('.expenses-amount');
 let expensesItems = document.querySelectorAll('.expenses-items');
 
 let additionalExpensesItem = document.querySelector('.additional_expenses-item');
@@ -56,20 +59,9 @@ period[0].removeChild(periodAmount[0]);
 //period[0].appendChild(newPeriodAmount);
 
 let inputAll = document.querySelectorAll('input');
-inputAll.forEach(function (item, index, arr) {
+inputAll.forEach(function (item, index) {
 	console.log(item, index);
 });
-let inputLeft = inputAll[0];
-let inputLeft1 = inputAll[1];
-let inputLeft2 = inputAll[2];
-let inputLeft3 = inputAll[3];
-let inputLeft4 = inputAll[4];
-let inputLeft5 = inputAll[5];
-let inputLeft6 = inputAll[6];
-let inputLeft7 = inputAll[7];
-let inputLeft8 = inputAll[8];
-let inputLeft11 = inputAll[11];
-let inputLeft12 = inputAll[12];
 
 
 //объект
@@ -91,9 +83,9 @@ let appData = {
 
 		if (salaryAmount.value === '') {
 			//alert('Ошибка, заполните поле "Месячный доход"!');
-			return;
+			return false;
 		}
-
+		console.log(this);
 		appData.budget = +salaryAmount.value;
 		appData.deleteButtonStart();//удаляем кнопку "рассчитать", появляется "сбросить"
 		appData.getExpenses();
@@ -123,19 +115,18 @@ let appData = {
 		buttonCancel.style.display = 'block';
 	},
 	getReadOnly: function () {//блокировка полей слева, после кнопки "рассчитать"
-		inputLeft.readOnly = true;
-		inputLeft1.readOnly = true;
-		inputLeft2.readOnly = true;
-		inputLeft3.readOnly = true;
-		inputLeft4.readOnly = true;
-		inputLeft5.readOnly = true;
-		inputLeft6.readOnly = true;
-		inputLeft7.readOnly = true;
-		inputLeft8.disabled = true;
-		inputLeft11.readOnly = true;
-		inputLeft12.disabled = true;
 		buttonIncomePlus.disabled = true;
 		buttonExpensesPlus.disabled = true;
+		salaryAmount.readOnly = true;
+		incomeTitle.readOnly = true;
+		incomeAmount.readOnly = true;
+		additionalIncomeItem1.readOnly = true;
+		additionalIncomeItem2.readOnly = true;
+		expensesTitle.readOnly = true;
+		expensesAmount.readOnly = true;
+		additionalExpensesItem.readOnly = true;
+		targetAmount.readOnly = true;
+		depositCheck.disabled = true;
 	},
 	addExpensesBlock: function () {//получение полей
 
@@ -189,7 +180,7 @@ let appData = {
 		});
 	},
 	getAddIncome: function () {
-		additionalIncomeItem.forEach(function (item) {
+		additionalIncomeItems.forEach(function (item) {
 			let itemValue = item.value.trim();//получаем значение с инпута, без пробелов
 			if (itemValue !== '') {
 				appData.addIncome.push(itemValue);//передаём в массив
