@@ -14,8 +14,6 @@ let depositCheck = document.querySelector('#deposit-check');
 //возможные доходы
 let additionalIncomeItems = document.querySelectorAll('.additional_income-item');
 
-let additionalIncomeItem1 = additionalIncomeItems[0];
-let additionalIncomeItem2 = additionalIncomeItems[1];
 
 //блоки result
 let resultValue = document.querySelectorAll('.result-total');
@@ -58,16 +56,12 @@ let periodAmount = document.querySelectorAll('.period-amount');
 
 let newPeriodAmount = document.createElement('div');
 
-period[0].removeChild(periodAmount[0]);
-//newPeriodAmount.textContent = 'Новый элемент';
-//period[0].removeChild(periodAmount[0]);
-//period[0].appendChild(newPeriodAmount);
+period[0].removeChild(periodAmount[0]);//удаляем значение из period-select
+
 
 let inputAll = document.querySelectorAll('input');
-/* inputAll.forEach(function (item) {
-	console.log(item);
-	item.value = '';
-}); */
+
+let inputAllData = document.querySelectorAll('.data input[type = text]');//получаем левые инпуты
 
 
 //объект appData
@@ -87,8 +81,16 @@ let appData = {
 	start: function () {
 
 		if (salaryAmount.value === '') {
-			return false;
+			buttonStart.setAttribute('disabled', 'true');//откл. кнопку
+			return;
 		}
+		inputAllData.forEach(function (item) {
+			item.setAttribute('readOnly', 'true');
+		});
+		budgetDayValue.setAttribute('readOnly', 'true');
+		buttonIncomePlus.disabled = true;
+		buttonExpensesPlus.disabled = true;
+
 		appData.budget = +salaryAmount.value;
 		appData.deleteButtonStart();//удаляем кнопку "рассчитать", появляется "сбросить"
 		appData.getExpenses();
@@ -99,7 +101,6 @@ let appData = {
 		appData.getBudget();
 		appData.calcPeriod();
 		appData.getSelectPeriod();
-		appData.getReadOnly();
 
 		appData.showResult();
 	},
@@ -115,21 +116,6 @@ let appData = {
 	deleteButtonStart: function () {
 		buttonStart.style.display = 'none';
 		buttonCancel.style.display = 'block';
-	},
-	getReadOnly: function () {//блокировка полей слева, после кнопки "рассчитать"
-		buttonIncomePlus.disabled = true;
-		buttonExpensesPlus.disabled = true;
-		salaryAmount.readOnly = true;
-		incomeTitle.readOnly = true;
-		incomeAmount.readOnly = true;
-		additionalIncomeItem1.readOnly = true;
-		additionalIncomeItem2.readOnly = true;
-		expensesTitle.readOnly = true;
-		expensesAmount.readOnly = true;
-		additionalExpensesItem.readOnly = true;
-		targetAmount.readOnly = true;
-		depositCheck.disabled = true;
-		//periodSelect.disabled = true;
 	},
 	addExpensesBlock: function () {//получение полей
 
@@ -240,7 +226,6 @@ let appData = {
 		inputAll.forEach(function (item) {
 			item.value = '';
 			item.readOnly = false;
-			item.disabled = false;
 		});
 		newPeriodAmount.textContent = periodSelect.value = 1;
 		buttonIncomePlus.disabled = false;
@@ -261,6 +246,7 @@ buttonExpensesPlus.addEventListener('click', appData.addExpensesBlock);//выз�
 buttonIncomePlus.addEventListener('click', appData.addIncomeBlock);//вызов функции добавления полей
 
 periodSelect.addEventListener('change', appData.getSelectPeriod);
+
 
 //console.log(appData);
 
