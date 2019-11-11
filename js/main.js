@@ -9,7 +9,10 @@ const buttonIncomePlus = document.getElementsByTagName('button')[0];
 const buttonExpensesPlus = document.getElementsByTagName('button')[1];
 
 //чекбокс депозит
-const depositCheck = document.querySelector('#deposit-check');
+let depositCheck = document.querySelector('#deposit-check');//галочка для депозита
+let depositAmount = document.querySelector('.deposit-amount');
+let depositPercent = document.querySelector('.deposit-percent');
+let depositBank = document.querySelector('.deposit-bank');//опции, выбор банка
 
 //возможные доходы
 let additionalIncomeItems = document.querySelectorAll('.additional_income-item');
@@ -44,8 +47,6 @@ let expensesItems = document.querySelectorAll('.expenses-items');
 
 let additionalExpensesItem = document.querySelector('.additional_expenses-item');
 
-let depositAmount = document.querySelector('.deposit-amount');
-let inputDepositPercent = document.querySelector('.deposit-percent');
 
 let targetAmount = document.querySelector('.target-amount');
 
@@ -87,6 +88,8 @@ AppData.prototype.start = function () {
 	inputAllData.forEach((item) => {
 		item.setAttribute('readOnly', 'true');
 	});
+	depositCheck.disabled = true;
+	depositBank.disabled = true;
 	budgetDayValue.setAttribute('readOnly', 'true');
 	buttonIncomePlus.disabled = true;
 	buttonExpensesPlus.disabled = true;
@@ -99,11 +102,10 @@ AppData.prototype.start = function () {
 	this.getIncome();
 	this.getAddExpenses();
 	this.getAddIncome();
+	this.getInfoDeposit();
 	this.getBudget();
 	this.calcPeriod();
 	this.getSelectPeriod();
-	this.getStatusIncome();
-	this.getInfoDeposit();
 
 	this.showResult();
 };
@@ -166,7 +168,8 @@ AppData.prototype.getIncome = function () {//дополнительный дох
 };
 
 AppData.prototype.getAddExpenses = function () {
-	let addExpenses = additionalExpensesItem.value.split(',');
+	let addExpenses = additionalExpensesItem.value.split(',');//передаём в массив через запятую
+
 	addExpenses.forEach((item) => {
 		item = item.trim();//очистка от пробелов
 		if (item !== '') {
@@ -197,7 +200,7 @@ AppData.prototype.getExpensesMonth = function () {
 };
 
 AppData.prototype.getBudget = function () {
-	this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;//накопления за месяц(минус расходы)
+	this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth + (this.moneyDeposit * this.percentDeposit) / 12;//накопления за месяц(минус расходы)
 	this.budgetDay = Math.floor(this.budgetMonth / 30);
 };
 
@@ -205,30 +208,10 @@ AppData.prototype.getTargetMonth = function () {
 	return Math.ceil(targetAmount.value / this.budgetMonth);//расчёт периода достижения цели в месяцах
 };
 
-AppData.prototype.getStatusIncome = function () {
-	if (this.budgetDay >= 800) {
-		return ('Высокий уровень дохода');
-	} else if (this.budgetDay >= 300 && this.budgetDay < 800) {
-		return ('Средний уровень дохода');
-	} else if (this.budgetDay >= 0 && this.budgetDay < 300) {
-		return ('Низкий уровень дохода');
-	} else {
-		return ('Что-то пошло не так');
-	}
-
-};
-
 AppData.prototype.getInfoDeposit = function () {
 	if (this.deposit) {
-		this.percentDeposit = prompt('Какой годовой процент?', '14');
-		while (isNaN(this.percentDeposit) || this.percentDeposit === '' || this.percentDeposit === null) {
-			this.percentDeposit = prompt('Какой годовой процент?', '14');
-		}
-		this.moneyDeposit = prompt('Какая сумма заложена?', '20000');
-		while (isNaN(this.moneyDeposit) || this.moneyDeposit === '' || this.moneyDeposit === null) {
-			this.moneyDeposit = prompt('Какая сумма заложена?', '20000');
-		}
-
+		this.percentDeposit = depositPercent.value;
+		this.moneyDeposit = depositAmount.value;
 	}
 };
 
@@ -264,6 +247,14 @@ AppData.prototype.getReset = function () {
 	});
 	periodSelect.value = '0';
 	newPeriodAmount.textContent = periodSelect.value;
+	depositCheck.disabled = false;
+	depositBank.disabled = false;
+	depositBank.style.display = 'none';
+	depositAmount.style.display = 'none';
+	depositPercent.style.display = 'none';
+	myData.deposit = 'false';
+	depositCheck.checked = false;
+
 	buttonIncomePlus.disabled = false;
 	buttonExpensesPlus.disabled = false;
 	buttonStart.style.display = 'block';
@@ -279,6 +270,30 @@ AppData.prototype.eventsListeners = function () {
 	buttonExpensesPlus.addEventListener('click', myData.addExpensesBlock);//вызов функции добавления полей
 	buttonIncomePlus.addEventListener('click', myData.addIncomeBlock);//вызов функции добавления полей
 	periodSelect.addEventListener('change', myData.getSelectPeriod);
+	depositCheck.addEventListener('change', function () {//проверка депозита
+		if (depositCheck.checked) {
+
+			depositBank.style.display = 'inline-block';
+			depositAmount.style.display = 'inline-block';
+			myData.deposit = 'true';
+			depositBank.addEventListener('change', function () {//если поставление галочка
+				let selectIndex = this.options[this.selectedIndex].value;//вычисление % банка
+				if (selectIndex === 'other') {//строка другой
+					depositPercent.disabled = false;
+					depositPercent.style.display = 'inline-block';
+					depositPercent.value = '';
+				} else {
+					depositPercent.style.display = 'none';
+					depositPercent.value = selectIndex;//берётся из % других банков
+				}
+			});
+		} else {
+			depositBank.style.display = 'none';
+			depositAmount.style.display = 'none';
+			depositAmount.value = '';
+			myData.deposit = 'false';
+		}
+	});
 };
 
 AppData.prototype.eventsListeners();
