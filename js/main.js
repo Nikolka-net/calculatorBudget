@@ -234,7 +234,7 @@ let appData = {
 		buttonCancel.style.display = 'none';
 	},
 };
-
+console.log(appData.budgetMonth);
 //addEventListener
 let newStart = appData.start.bind(appData);//привязка к объекту и методу start
 
@@ -253,8 +253,8 @@ periodSelect.addEventListener('change', appData.getSelectPeriod);
 
 //Function
 appData.getTargetMonth();
-appData.getStatusIncome();
-appData.getInfoDeposit();
+// appData.getStatusIncome();
+// appData.getInfoDeposit();
 
 appData.addExpenses = appData.addExpenses.map(function (item) {
 	return item[0].toUpperCase() + item.slice(1).toLowerCase();
