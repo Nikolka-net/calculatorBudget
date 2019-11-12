@@ -142,6 +142,20 @@ AppData.prototype.addIncomeBlock = function () {
 	}
 };
 
+/* AppData.prototype.addExpIncBlock = function () {
+
+	const count = (item) => {
+		const startStr = item.className.split('-')[0];
+		console.log('startStr: ', startStr);
+		let cloneExpIncItem = ${ startStr }Items[0].cloneNode(true);
+	};
+
+	addExpensesBlock.forEach(count);
+	addIncomeBlock.forEach(count);
+
+}; */
+
+
 AppData.prototype.getExpenses = function () {//псевдомассив, перебор элементов 
 	expensesItems.forEach((item) => {
 		let itemExpenses = item.querySelector('.expenses-title').value;//получим значение элементов
@@ -202,6 +216,7 @@ AppData.prototype.getExpensesMonth = function () {
 AppData.prototype.getBudget = function () {
 	this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth + (this.moneyDeposit * this.percentDeposit) / 12;//накопления за месяц(минус расходы)
 	this.budgetDay = Math.floor(this.budgetMonth / 30);
+	console.log(this.budgetMonth);
 };
 
 AppData.prototype.getTargetMonth = function () {
