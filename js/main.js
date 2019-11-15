@@ -84,8 +84,6 @@ AppData.prototype.start = function () {
 	}
 
 	this.budget = +salaryAmount.value;
-	// this.getExpenses();//обязательный расход
-	// this.getIncome();//дополнительный доход
 	this.getExpInc();
 	this.getAddExpenses();//возможный расход
 	this.getAddIncome();//возможный доход
